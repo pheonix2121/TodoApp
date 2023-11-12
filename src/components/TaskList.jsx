@@ -9,7 +9,7 @@ const TaskList = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>Task List</h1>
+     
       <div className={styles.taskForm}>
         <TaskForm  />
       </div>
