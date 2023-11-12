@@ -1,5 +1,6 @@
+"use client";
+import React, { useEffect, useState } from "react";
 
-import React, { useState } from "react";
 import TaskForm from "./TaskForm";
 import ActiveTask from "./ActiveTask";
 import FinishedTask from "./FinishedTask";
@@ -10,13 +11,14 @@ const TaskList = () => {
   const [finishedTasks, setFinishedTasks] = useState([]);
 
   const addTask = (task) => {
-    const newTask = {
-      ...task,
-      id: Math.random().toString(),
-    };
-
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+    setTasks((prevTasks) => [...prevTasks, task]);
   };
+  useEffect(async () => {
+    const res = await fetch("/api/saveTasks");
+    const data = await res.json();
+    console.log(data);
+    setTasks(data.data)
+  },[]);
 
   const completeTask = (taskId) => {
     const completedTask = tasks.find((task) => task.id === taskId);
