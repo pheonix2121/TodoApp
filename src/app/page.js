@@ -1,4 +1,5 @@
-const { default: TaskList } = require("@/components/TaskList")
+import TaskList from "../components/TaskList";
+
 
 const HomePage=()=>{
     return(<TaskList/>)
