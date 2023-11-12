@@ -4,8 +4,8 @@ import styles from "./Tasks.module.css";
 
 const Tasks = ({ isCompleted }) => {
 
-  const [allTasks, setAllTasks] = useState([])
-
+const [allTasks, setAllTasks] = useState([]);
+  
 
 
   useEffect(async () => {
@@ -13,7 +13,9 @@ const Tasks = ({ isCompleted }) => {
     const data = await res.json();
     console.log(data);
     setAllTasks(data.data)
-  },[]);
+    setAllTasks(data.data);
+}, []);
+  
 
   const completeTask = async (data) => {
     console.log(data);
@@ -35,6 +37,18 @@ const Tasks = ({ isCompleted }) => {
     const result = await res.json();
     console.log(result);
   };
+
+  const deleteHandler = async (taskId) => {
+    const res = await fetch("/api/saveTasks", {
+      method: "DELETE",
+      body: JSON.stringify({ _id: taskId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+  };
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>{!isCompleted ? "Active Tasks" : "Finished Tasks"}</h2>
@@ -54,6 +68,12 @@ const Tasks = ({ isCompleted }) => {
                   >
                     Completed
                   </button>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => deleteHandler(task._id)}
+                  >
+                    Delete
+                  </button>
                 </li>
               )
           )}
@@ -66,6 +86,12 @@ const Tasks = ({ isCompleted }) => {
                     <span className={styles.taskText}>{task.task}</span>
                     <span className={styles.taskDate}>{task.date}</span>
                   </div>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => deleteHandler(task._id)}
+                  >
+                    Delete
+                  </button>
                 </li>
               )
           )}
