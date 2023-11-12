@@ -26,6 +26,7 @@ const TaskForm = () =>{
         task,
         date,
         time,
+        isCompleted: false 
       }),
       headers: {
         "Content-Type": "application/json",
@@ -34,8 +35,7 @@ const TaskForm = () =>{
     const result = await res.json();
     console.log(result);
     if (result.acknowledged) {
-      addTask({ _id: insertedId, task, date, time });
-    
+      
       setTask("");
       setDate("");
       setTime("");
